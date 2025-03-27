@@ -277,8 +277,7 @@ def main():
         okno.blit(tekst_levelu, (10, 10))
         tekst_zycia = pixel_font.render(f'zycia:{zycia}', True, kolor_bialy)
         okno.blit(tekst_zycia, (570, 10))
-        tekst_hp = pixel_font.render(f'hp:{gracz.hp}', True, kolor_bialy)
-        okno.blit(tekst_hp, (0,600))
+        
 
         for przeciwnik in przeciwnicy:
             przeciwnik.draw(okno)
