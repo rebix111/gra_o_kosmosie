@@ -112,12 +112,12 @@ class Gracz(Statek):
         self.max_hp = hp
         
         self.dash_cooldown = 0
-        self.dash_duration = 10
+        self.dash_duration = 15
         self.dash_speed = 15
         self.dash_active = False
         self.dash_direction = 0
         self.dash_cooldown_timer = 0
-        self.dash_cooldown_max = 60
+        self.dash_cooldown_max = 40
 
     def ruszanie_laserow(self, predkosc, objekty):
         self.cool_down()
@@ -183,14 +183,15 @@ class Przeciwnicy(Statek):
         self.y += predkosc_przeciwnika
 
     def strzelanie(self):
-        if self.cool_down_licznik == 0 and random.randrange(0, 120) == 1:
+        if self.cool_down_licznik == 0 and random.randrange(0, 200) == 1:
             laser = Laser(self.x + self.szerokosc_statku() // 2 - self.laser_zdj.get_width() // 2,
                           self.y + self.wysokosc_statku(), self.laser_zdj)
             self.cool_down_licznik = 1
             return laser
         return None
 
-def Przegrana():
+def Przegrana(level):
+    zapisz_wynik_levela(level)
     okno.blit(tlo_do_przegranej, (0, 0))
     pixel_font = pygame.font.Font('gra_o_kosmosie\\PressStart2P-Regular.ttf', 45)
     tekst_przegranej = pixel_font.render('Przegrałeś!', True, kolor_bialy)
@@ -224,7 +225,7 @@ def menu_startowe():
                 if przycisk_rect.collidepoint(event.pos):
                     return
 
-def menu_pauzy():
+def menu_pauzy(level):
     pauza = True
     pixel_font = pygame.font.Font('gra_o_kosmosie\\PressStart2P-Regular.ttf', 25)
     
@@ -242,18 +243,43 @@ def menu_pauzy():
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                zapisz_wynik_levela(level)
                 pygame.quit()
                 quit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pauza = False
                 if event.key == pygame.K_F1:
+                    zapisz_wynik_levela(level)
                     pygame.quit()
                     quit()
 
+def wczytaj_liczbe_rund():
+    rounds_file = 'gra_o_kosmosie/rounds.txt'
+    
+    if not os.path.exists(rounds_file):
+        with open(rounds_file, 'w') as file:
+            file.write('0')
+        return 0
+    else:
+        try:
+            with open(rounds_file, 'r') as file:
+                rounds = file.read().strip()
+                return int(rounds)
+        except ValueError:  
+            print("Błąd wczytywania liczby rund, ustawiono 0")
+            return 0
+
+def zapisz_wynik_levela(level):
+    najlepszy_wynik = wczytaj_liczbe_rund()
+    
+    if level > najlepszy_wynik:
+        with open('gra_o_kosmosie/rounds.txt', 'w') as file:
+            file.write(str(level))
+
 def main():
     menu_startowe()
-    
+    najlepszy_wynik = wczytaj_liczbe_rund()
     dziala = True
     czas = pygame.time.Clock()
     fps = 60
@@ -266,18 +292,19 @@ def main():
     lasery_przeciwnikow = []
     potki = []
     dlugosc_fali = 5
-    predkosc_przeciwnika = 2
+    predkosc_przeciwnika = 1
     laser_speed = 5
     przegrana = False
-    licznik_potek = 0
-
+    licznik_potek = 0 
+    
     def narysuj_okno():
         okno.blit(tlo, (0, 0))
         tekst_levelu = pixel_font.render(f'level:{level}', True, kolor_bialy)
         okno.blit(tekst_levelu, (10, 10))
         tekst_zycia = pixel_font.render(f'zycia:{zycia}', True, kolor_bialy)
         okno.blit(tekst_zycia, (570, 10))
-        
+        tekst_naj_levelu = pixel_font.render(f"najlepszy wynik:{najlepszy_wynik}", True, kolor_bialy)
+        okno.blit(tekst_naj_levelu, (170, 720))
 
         for przeciwnik in przeciwnicy:
             przeciwnik.draw(okno)
@@ -302,7 +329,7 @@ def main():
         
         if zycia <= 0 or gracz.hp <= 0:
             przegrana = True
-            Przegrana()
+            Przegrana(level)
             dziala = False
             main()
 
@@ -315,6 +342,7 @@ def main():
 
         if len(przeciwnicy) == 0:
             level += 1
+            zapisz_wynik_levela(level)
             dlugosc_fali += 5
             for i in range(dlugosc_fali):
                 przeciwnik = Przeciwnicy(random.randrange(50, szerokosc_okna - 100), 
@@ -332,7 +360,7 @@ def main():
                     elif pygame.key.get_pressed()[pygame.K_d]:
                         gracz.dash(1)
                 if event.key == pygame.K_ESCAPE:
-                    menu_pauzy()
+                    menu_pauzy(level)
 
         przyciski = pygame.key.get_pressed()
         if not gracz.dash_active:
@@ -384,6 +412,7 @@ def main():
 
         narysuj_okno()
 
+    zapisz_wynik_levela(level)
     pygame.quit()
 
 if __name__ == "__main__":
