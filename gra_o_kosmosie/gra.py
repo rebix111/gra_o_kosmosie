@@ -39,7 +39,7 @@ class Laser:
         self.y += predkosc
 
     def za_ekranem(self):
-        return not (self.y <= wysokosc_okna and self.y >= 0)
+        return not (self.y <= wysokosc_okna and self.y >= -100)
 
     def kolizja(self, obj):
         return zderzenie(self, obj)
@@ -211,9 +211,11 @@ def menu_startowe():
 
     while True:
         okno.blit(tlo_menu, (0, 0))
-        pixel_font = pygame.font.Font('gra_o_kosmosie\\PressStart2P-Regular.ttf', 20)
-        tekst_startu = pixel_font.render("Kliknij przycisk, aby rozpocząć", True, kolor_bialy)
-        okno.blit(tekst_startu, (60, 100))
+        pixel_font = pygame.font.Font('gra_o_kosmosie\\PressStart2P-Regular.ttf', 23)
+        tekst_startu = pixel_font.render("Kliknij przycisk, aby rozpoczonc", True, kolor_bialy)
+        okno.blit(tekst_startu, (10, 100))
+        tekst_info3 = pixel_font.render("Pod ESC masz instrukcje gry ", True, kolor_bialy)
+        okno.blit(tekst_info3, (60, 600))
         okno.blit(przycisk, przycisk_rect.topleft)
         pygame.display.update()
 
@@ -227,18 +229,20 @@ def menu_startowe():
 
 def menu_pauzy(level):
     pauza = True
-    pixel_font = pygame.font.Font('gra_o_kosmosie\\PressStart2P-Regular.ttf', 25)
+    pixel_font = pygame.font.Font('gra_o_kosmosie\\PressStart2P-Regular.ttf', 23)
     
     while pauza:
         okno.blit(tlo_do_przegranej, (0, 0))
         tekst_info = pixel_font.render("ogl gra jest zapauzowana", True, kolor_bialy)
         tekst_info2 = pixel_font.render("-zeby wrucic do gry kliknij esc", True, kolor_bialy)
         tekst_info3 = pixel_font.render("-zeby wyjsc f1", True, kolor_bialy)
+        tekst_info4 = pixel_font.render("-pod Shiftem masz dashe btw", True, kolor_bialy)
         
-        okno.blit(tekst_info, (130, 100))
-        okno.blit(tekst_info2, (60, 200))
-        okno.blit(tekst_info3, (60, 250))
-        okno.blit(stonks_on_top, (0, 300))
+        okno.blit(tekst_info, (100, 100))
+        okno.blit(tekst_info2, (20, 200))
+        okno.blit(tekst_info3, (20, 250))
+        okno.blit(tekst_info4, (20, 300))
+        okno.blit(stonks_on_top, (0, 350))
         pygame.display.update()
         
         for event in pygame.event.get():
@@ -287,13 +291,13 @@ def main():
     zycia = 5
     pixel_font = pygame.font.Font('gra_o_kosmosie\\PressStart2P-Regular.ttf', 25)
     gracz = Gracz(300, 650)
-    predkosc_gracza = 5
+    predkosc_gracza = 4
     przeciwnicy = []
     lasery_przeciwnikow = []
     potki = []
     dlugosc_fali = 5
     predkosc_przeciwnika = 1
-    laser_speed = 5
+    laser_speed = 8
     przegrana = False
     licznik_potek = 0 
     
