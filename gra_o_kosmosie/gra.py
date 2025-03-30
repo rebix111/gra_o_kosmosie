@@ -275,7 +275,7 @@ def menu_pauzy(level):
                     quit()
 
 def wczytaj_liczbe_rund():
-    rounds_file = 'gra_o_kosmosie/rounds.txt'
+    rounds_file = 'inne/rounds.txt'
     
     if not os.path.exists(rounds_file):
         with open(rounds_file, 'w') as file:
@@ -294,7 +294,7 @@ def zapisz_wynik_levela(level):
     najlepszy_wynik = wczytaj_liczbe_rund()
     
     if level > najlepszy_wynik:
-        with open('gra_o_kosmosie/rounds.txt', 'w') as file:
+        with open('inne/rounds.txt', 'w') as file:
             file.write(str(level))
 
 def main():
