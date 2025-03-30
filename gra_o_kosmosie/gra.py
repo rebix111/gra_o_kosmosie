@@ -9,26 +9,26 @@ wysokosc_okna, szerokosc_okna = 750, 750
 okno = pygame.display.set_mode((szerokosc_okna, wysokosc_okna))
 
 kolor_bialy = (255, 255, 255)
-czerwony_statek = pygame.image.load(os.path.join("gra_o_kosmosie","tekstury", "pixel_ship_red_small.png"))
-zielony_statek = pygame.image.load(os.path.join("gra_o_kosmosie","tekstury", "pixel_ship_green_small.png"))
-niebieski_statek = pygame.image.load(os.path.join("gra_o_kosmosie","tekstury", "pixel_ship_blue_small.png"))
-zulty_statek = pygame.image.load(os.path.join("gra_o_kosmosie","tekstury", "pixel_ship_yellow.png"))
+czerwony_statek = pygame.image.load(os.path.join("tekstury", "pixel_ship_red_small.png"))
+zielony_statek = pygame.image.load(os.path.join("tekstury", "pixel_ship_green_small.png"))
+niebieski_statek = pygame.image.load(os.path.join("tekstury", "pixel_ship_blue_small.png"))
+zulty_statek = pygame.image.load(os.path.join("tekstury", "pixel_ship_yellow.png"))
 
-czerwony_laser = pygame.image.load(os.path.join("gra_o_kosmosie","tekstury", "pixel_laser_red.png"))
-zielony_laser = pygame.image.load(os.path.join("gra_o_kosmosie","tekstury", "pixel_laser_green.png"))
-niebieski_laser = pygame.image.load(os.path.join("gra_o_kosmosie","tekstury", "pixel_laser_blue.png"))
-zulty_laser = pygame.image.load(os.path.join("gra_o_kosmosie","tekstury", "pixel_laser_yellow.png"))
-potka_do_leczenia = pygame.image.load(os.path.join("gra_o_kosmosie","tekstury", "Sprite-0001.png"))
-stonks_on_top = pygame.transform.scale(pygame.image.load(os.path.join("gra_o_kosmosie","tekstury", "bink czi li.jpg")), (szerokosc_okna, wysokosc_okna/2))
+czerwony_laser = pygame.image.load(os.path.join("tekstury", "pixel_laser_red.png"))
+zielony_laser = pygame.image.load(os.path.join("tekstury", "pixel_laser_green.png"))
+niebieski_laser = pygame.image.load(os.path.join("tekstury", "pixel_laser_blue.png"))
+zulty_laser = pygame.image.load(os.path.join("tekstury", "pixel_laser_yellow.png"))
+potka_do_leczenia = pygame.image.load(os.path.join("tekstury", "Sprite-0001.png"))
+stonks_on_top = pygame.transform.scale(pygame.image.load(os.path.join("tekstury", "bink czi li.jpg")), (szerokosc_okna, wysokosc_okna/2))
 
-tlo = pygame.transform.scale(pygame.image.load(os.path.join("gra_o_kosmosie","tekstury", "background-black.png")), (szerokosc_okna, wysokosc_okna))
-tlo_do_przegranej = pygame.transform.scale(pygame.image.load(os.path.join("gra_o_kosmosie","tekstury", "tlo_do_przegranej.png")), (szerokosc_okna, wysokosc_okna))
-tlo_menu = pygame.transform.scale(pygame.image.load(os.path.join("gra_o_kosmosie","tekstury", "Sprite.jpg")), (szerokosc_okna, wysokosc_okna))
+tlo = pygame.transform.scale(pygame.image.load(os.path.join("tekstury", "background-black.png")), (szerokosc_okna, wysokosc_okna))
+tlo_do_przegranej = pygame.transform.scale(pygame.image.load(os.path.join("tekstury", "tlo_do_przegranej.png")), (szerokosc_okna, wysokosc_okna))
+tlo_menu = pygame.transform.scale(pygame.image.load(os.path.join("tekstury", "Sprite.jpg")), (szerokosc_okna, wysokosc_okna))
 
-dziwienk_pocisku = pygame.mixer.Sound('gra_o_kosmosie\\dziwieki\\Grenade+1.mp3')
-ogien_pocisku = pygame.mixer.Sound('gra_o_kosmosie\\dziwieki\\Gun+Silencer.mp3')
-sound_track = pygame.mixer.Sound('gra_o_kosmosie\\dziwieki\\pixel-perfect-112527.mp3')
-przejscie_sound = pygame.mixer.Sound('gra_o_kosmosie\\dziwieki\\332003_lloydevans09_whoosh (online-audio-converter.com).mp3')
+dziwienk_pocisku = pygame.mixer.Sound('dziwieki\\Grenade+1.mp3')
+ogien_pocisku = pygame.mixer.Sound('dziwieki\\Gun+Silencer.mp3')
+sound_track = pygame.mixer.Sound('dziwieki\\pixel-perfect-112527.mp3')
+przejscie_sound = pygame.mixer.Sound('dziwieki\\332003_lloydevans09_whoosh (online-audio-converter.com).mp3')
 dziwienk_pocisku.set_volume(0.1)
 ogien_pocisku.set_volume(0.1)
 sound_track.set_volume(0.4)
@@ -208,7 +208,7 @@ class Przeciwnicy(Statek):
 def Przegrana(level):
     zapisz_wynik_levela(level)
     okno.blit(tlo_do_przegranej, (0, 0))
-    pixel_font = pygame.font.Font('gra_o_kosmosie\\inne\\PressStart2P-Regular.ttf', 45)
+    pixel_font = pygame.font.Font('inne\\PressStart2P-Regular.ttf', 45)
     tekst_przegranej = pixel_font.render('Przegrałeś!', True, kolor_bialy)
     okno.blit(tekst_przegranej, (150, 300))
     pygame.display.update()
@@ -221,13 +221,13 @@ def zderzenie(objekt1, objekt2):
 
 
 def menu_startowe():
-    przycisk = pygame.image.load(os.path.join('gra_o_kosmosie','tekstury', 'obraz_2025-03-11_202421195-removebg-preview.png'))
+    przycisk = pygame.image.load(os.path.join('tekstury', 'obraz_2025-03-11_202421195-removebg-preview.png'))
     przycisk = pygame.transform.scale(przycisk, (300, 150))
     przycisk_rect = przycisk.get_rect(topleft=(230, 280))
 
     while True:
         okno.blit(tlo_menu, (0, 0))
-        pixel_font = pygame.font.Font('gra_o_kosmosie\\inne\\PressStart2P-Regular.ttf', 23)
+        pixel_font = pygame.font.Font('inne\\PressStart2P-Regular.ttf', 23)
         tekst_startu = pixel_font.render("Kliknij przycisk, aby rozpoczonc", True, kolor_bialy)
         okno.blit(tekst_startu, (10, 100))
         tekst_info3 = pixel_font.render("Pod ESC masz instrukcje gry ", True, kolor_bialy)
@@ -245,7 +245,7 @@ def menu_startowe():
 
 def menu_pauzy(level):
     pauza = True
-    pixel_font = pygame.font.Font('gra_o_kosmosie\\inne\\PressStart2P-Regular.ttf', 23)
+    pixel_font = pygame.font.Font('inne\\PressStart2P-Regular.ttf', 23)
     
     while pauza:
         okno.blit(tlo_do_przegranej, (0, 0))
@@ -306,7 +306,7 @@ def main():
     fps = 60
     level = 0
     zycia = 5
-    pixel_font = pygame.font.Font('gra_o_kosmosie\\inne\\PressStart2P-Regular.ttf', 25)
+    pixel_font = pygame.font.Font('inne\\PressStart2P-Regular.ttf', 25)
     gracz = Gracz(300, 650)
     predkosc_gracza = 4
     przeciwnicy = []
