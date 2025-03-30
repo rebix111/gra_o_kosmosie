@@ -25,11 +25,10 @@ tlo = pygame.transform.scale(pygame.image.load(os.path.join("tekstury", "backgro
 tlo_do_przegranej = pygame.transform.scale(pygame.image.load(os.path.join("tekstury", "tlo_do_przegranej.png")), (szerokosc_okna, wysokosc_okna))
 tlo_menu = pygame.transform.scale(pygame.image.load(os.path.join("tekstury", "Sprite.jpg")), (szerokosc_okna, wysokosc_okna))
 
-dziwienk_pocisku = pygame.mixer.Sound('dziwieki\\Grenade+1.mp3')
 ogien_pocisku = pygame.mixer.Sound('dziwieki\\Gun+Silencer.mp3')
 sound_track = pygame.mixer.Sound('dziwieki\\pixel-perfect-112527.mp3')
 przejscie_sound = pygame.mixer.Sound('dziwieki\\332003_lloydevans09_whoosh (online-audio-converter.com).mp3')
-dziwienk_pocisku.set_volume(0.1)
+
 ogien_pocisku.set_volume(0.1)
 sound_track.set_volume(0.4)
 przejscie_sound.set_volume(0.2)
@@ -51,7 +50,6 @@ class Laser:
         return not (self.y <= wysokosc_okna and self.y >= -100)
 
     def kolizja(self, obj):
-        dziwienk_pocisku.play()
         return zderzenie(self, obj)
 
 class Potka:
@@ -275,7 +273,7 @@ def menu_pauzy(level):
                     quit()
 
 def wczytaj_liczbe_rund():
-    rounds_file = 'inne/rounds.txt'
+    rounds_file =('inne\\rounds.txt')
     
     if not os.path.exists(rounds_file):
         with open(rounds_file, 'w') as file:
@@ -294,7 +292,7 @@ def zapisz_wynik_levela(level):
     najlepszy_wynik = wczytaj_liczbe_rund()
     
     if level > najlepszy_wynik:
-        with open('inne/rounds.txt', 'w') as file:
+        with open('inne\\rounds.txt', 'w') as file:
             file.write(str(level))
 
 def main():
